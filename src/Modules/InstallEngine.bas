@@ -5,7 +5,7 @@ Attribute VB_Name = "InstallEngine"
 
 Option Explicit
 
-Private Const BASE_WORK_FOLDER As String = "C:\Users\koss\AppData\Local\Temp\radbasic-installer"
+Private Const BASE_WORK_FOLDER As String = Environ("temp") & "\radbasic-installer"
 Private Const BASE_UNPACK_FOLDER As String = BASE_WORK_FOLDER & "\extract-pkg"
 Private Const BASE_REGISTRY_PATH As String = "SOFTWARE\WOW6432Node\RAD Basic"
 Private Const REGKEY_NAME_INSTALL_DIR As String = "InstallDir"
