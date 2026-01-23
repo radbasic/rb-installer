@@ -4,56 +4,23 @@ Object = "{3B7C8863-D78F-101B-B9B5-04021C009402}#1.2#0"; "RICHTX32.OCX"
 Begin VB.Form FrmIniSetup 
    BorderStyle     =   1  'Fixed Single
    Caption         =   "RAD Basic Installer"
-   ClientHeight    =   4752
-   ClientLeft      =   48
-   ClientTop       =   396
-   ClientWidth     =   8436
+   ClientHeight    =   4755
+   ClientLeft      =   45
+   ClientTop       =   390
+   ClientWidth     =   8445
    Icon            =   "FrmIniSetup.frx":0000
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
-   ScaleHeight     =   4752
-   ScaleWidth      =   8436
+   ScaleHeight     =   4755
+   ScaleWidth      =   8445
    StartUpPosition =   2  'CenterScreen
-   Begin VB.Frame FrmDstFolder 
-      BorderStyle     =   0  'None
-      Height          =   3372
-      Left            =   120
-      TabIndex        =   13
-      Top             =   600
-      Visible         =   0   'False
-      Width           =   8172
-      Begin VB.CommandButton CmdChangePath 
-         Caption         =   "Change..."
-         Height          =   372
-         Left            =   5520
-         TabIndex        =   16
-         Top             =   360
-         Width           =   1332
-      End
-      Begin VB.TextBox TxtDstFolder 
-         Height          =   288
-         Left            =   120
-         TabIndex        =   15
-         Text            =   "Text1"
-         Top             =   480
-         Width           =   5292
-      End
-      Begin VB.Label LblDstFolder 
-         Caption         =   "Install RAD Basic to:"
-         Height          =   252
-         Left            =   120
-         TabIndex        =   14
-         Top             =   120
-         Width           =   2532
-      End
-   End
    Begin VB.Frame FrameIni 
       BorderStyle     =   0  'None
-      Height          =   3012
+      Height          =   3135
       Left            =   120
       TabIndex        =   3
-      Top             =   840
+      Top             =   720
       Visible         =   0   'False
       Width           =   8172
       Begin VB.Frame FrmVersion 
@@ -89,21 +56,29 @@ Begin VB.Form FrmIniSetup
             Top             =   240
             Width           =   1452
          End
-         Begin VB.Label Label8 
+         Begin VB.Label LblInstalledVersion 
+            Caption         =   "Installed:"
+            Height          =   255
+            Left            =   120
+            TabIndex        =   34
+            Top             =   600
+            Width           =   3975
+         End
+         Begin VB.Label LblAvailableVersion 
             Caption         =   "Already updated"
-            Height          =   252
+            Height          =   255
             Left            =   120
             TabIndex        =   29
-            Top             =   720
-            Width           =   1572
+            Top             =   1080
+            Width           =   3975
          End
          Begin VB.Label Label7 
             Caption         =   "RAD Basic nightly"
             BeginProperty Font 
                Name            =   "MS Sans Serif"
-               Size            =   10.8
+               Size            =   9.75
                Charset         =   0
-               Weight          =   400
+               Weight          =   700
                Underline       =   0   'False
                Italic          =   0   'False
                Strikethrough   =   0   'False
@@ -132,6 +107,39 @@ Begin VB.Form FrmIniSetup
          Width           =   5052
       End
    End
+   Begin VB.Frame FrmDstFolder 
+      BorderStyle     =   0  'None
+      Height          =   3255
+      Left            =   120
+      TabIndex        =   13
+      Top             =   720
+      Visible         =   0   'False
+      Width           =   8172
+      Begin VB.CommandButton CmdChangePath 
+         Caption         =   "Change..."
+         Height          =   372
+         Left            =   5520
+         TabIndex        =   16
+         Top             =   360
+         Width           =   1332
+      End
+      Begin VB.TextBox TxtDstFolder 
+         Height          =   288
+         Left            =   120
+         TabIndex        =   15
+         Text            =   "Text1"
+         Top             =   480
+         Width           =   5292
+      End
+      Begin VB.Label LblDstFolder 
+         Caption         =   "Install RAD Basic to:"
+         Height          =   252
+         Left            =   120
+         TabIndex        =   14
+         Top             =   120
+         Width           =   2532
+      End
+   End
    Begin VB.Frame FrmInstallng 
       BorderStyle     =   0  'None
       Height          =   3252
@@ -146,8 +154,8 @@ Begin VB.Form FrmIniSetup
          TabIndex        =   26
          Top             =   1440
          Width           =   6492
-         _ExtentX        =   11451
-         _ExtentY        =   445
+         _ExtentX        =   11456
+         _ExtentY        =   450
          _Version        =   393216
          Appearance      =   1
          Min             =   1
@@ -219,22 +227,6 @@ Begin VB.Form FrmIniSetup
          Width           =   6372
       End
    End
-   Begin VB.Frame FrameFirst 
-      BorderStyle     =   0  'None
-      Height          =   3132
-      Left            =   120
-      TabIndex        =   8
-      Top             =   720
-      Width           =   8052
-      Begin VB.Label LblNightlyNotice 
-         Caption         =   "This installation process only support nightly releases."
-         Height          =   252
-         Left            =   240
-         TabIndex        =   9
-         Top             =   360
-         Width           =   5052
-      End
-   End
    Begin VB.Frame FrameSelectComponents 
       BorderStyle     =   0  'None
       Height          =   3012
@@ -249,8 +241,8 @@ Begin VB.Form FrmIniSetup
          TabIndex        =   7
          Top             =   240
          Width           =   7692
-         _ExtentX        =   13568
-         _ExtentY        =   4255
+         _ExtentX        =   13573
+         _ExtentY        =   4260
          _Version        =   393217
          Style           =   7
          Checkboxes      =   -1  'True
@@ -271,8 +263,8 @@ Begin VB.Form FrmIniSetup
          TabIndex        =   12
          Top             =   0
          Width           =   7812
-         _ExtentX        =   13780
-         _ExtentY        =   4890
+         _ExtentX        =   13785
+         _ExtentY        =   4895
          _Version        =   393217
          Enabled         =   -1  'True
          ScrollBars      =   2
@@ -304,11 +296,35 @@ Begin VB.Form FrmIniSetup
       Top             =   4080
       Width           =   1092
    End
+   Begin VB.Frame FrameFirst 
+      BorderStyle     =   0  'None
+      Height          =   3132
+      Left            =   120
+      TabIndex        =   8
+      Top             =   720
+      Width           =   8052
+      Begin VB.Label LblNightlyNotice 
+         Caption         =   "The installation process currently only support nightly releases."
+         Height          =   252
+         Left            =   240
+         TabIndex        =   9
+         Top             =   360
+         Width           =   5052
+      End
+   End
+   Begin VB.Label LblInstallerVersion 
+      Caption         =   "Installer Version:"
+      Height          =   255
+      Left            =   120
+      TabIndex        =   33
+      Top             =   4320
+      Width           =   3135
+   End
    Begin VB.Label lblTitle 
       Caption         =   "RAD Basic Installer"
       BeginProperty Font 
          Name            =   "MS Sans Serif"
-         Size            =   13.8
+         Size            =   13.5
          Charset         =   0
          Weight          =   400
          Underline       =   0   'False
@@ -402,11 +418,11 @@ Private Sub CmdNext_Click()
     UpdateButtons CurrenStep
     
     If CurrenStep = Installling Then
-        ' Force the re
+        ' Force the repaint
         DoEvents
         
         ' Execute the install
-        installedOk = InstallNightly(TxtDstFolder.Text)
+        installedOk = InstallNightly(TxtDstFolder.Text, True)
         
         If (installedOk) Then
             MsgBox "Installed successfully", vbOKOnly + vbInformation, "RAD Basic Installer"
@@ -424,6 +440,44 @@ Private Sub CmdNext_Click()
         UpdateButtons CurrenStep
     End If
     
+
+End Sub
+
+Private Sub CmdUpdate_Click()
+    Dim installedOk As Boolean
+    Dim localInstallDir As String
+    
+    CmdUpdate.Enabled = False
+    
+    ' Jump to Installing step
+    CurrenStep = Installling
+    ChangeComponent CurrenStep
+    UpdateButtons CurrenStep
+    
+    ' Force the repaint
+    DoEvents
+    
+    ' Execute the install
+    localInstallDir = GetInstalledDir()
+    LogInfo Me.name, "Performing update to target directory: " & localInstallDir
+    installedOk = InstallNightly(localInstallDir, False)
+    
+    If (installedOk) Then
+        MsgBox "Updated successfully", vbOKOnly + vbInformation, "RAD Basic Installer"
+        ' Refresh the value
+        IsInstalledAlready = ReqValidator.IsNewRADBasicInstalled
+        ' Refresh Versions step
+        PrepareVersionsStep
+        ' Refresh versions
+        CheckVersions
+    Else
+        MsgBox "Some error ocurred during the setup process", vbOKOnly + vbExclamation, "RAD Basic Installer"
+    End If
+    
+    ' Back to Main step
+    CurrenStep = ActionStep
+    ChangeComponent CurrenStep
+    UpdateButtons CurrenStep
 
 End Sub
 
@@ -498,9 +552,14 @@ Private Sub UpdateButtons(CurrentStep As SetupStep)
 
 End Sub
 
+
+
 Private Sub Form_Load()
     ReqUninstallOldVer = ReqValidator.IsOldRADBasicInstalled
     IsInstalledAlready = ReqValidator.IsNewRADBasicInstalled
+    
+    ' Update Installer version in UI
+    LblInstallerVersion.Caption = LblInstallerVersion.Caption & App.Major & "." & App.Minor & "." & App.Revision
         
     ' Log startup
     LogInfo Me.name, "Init RAD Basic Installer. Version: " & App.Major & "." & App.Minor & "." & App.Revision
@@ -520,9 +579,37 @@ Private Sub Form_Load()
     ' Default value for destination folder
     TxtDstFolder.Text = Environ$("ProgramFiles(x86)") & "\" & "RAD Basic"
     
+    CheckVersions
+    
     ' Set startup frame/step
     Set currentFrame = FrameFirst
     UpdateButtons CurrenStep
+    
+End Sub
+Public Sub CheckVersions()
+    Dim InstalledVersion As AppVersionInfo
+    Dim AvailableVersion As AppVersionInfo
+    
+    ' Retrieve installed version
+    If IsInstalledAlready Then
+        InstalledVersion = GetInstalledVersion
+        LogInfo Me.name, "Detected installed version: " & InstalledVersion.Version & " (build: " & InstalledVersion.Build & ")"
+        LblInstalledVersion.Caption = "Installed: " & " " & InstalledVersion.Version & " (build: " & InstalledVersion.Build & ")"
+    End If
+    
+    ' Retrieve online available version
+    If GetOnlineVersionInfo("https://downloads.radbasic.dev/channels/nightly/currentversion.json", AvailableVersion) Then
+        
+        If AvailableVersion.Build > InstalledVersion.Build Then
+            ' New version available
+            CmdUpdate.Enabled = True
+            LblAvailableVersion.Caption = "New version available: " & AvailableVersion.Version & " (build: " & AvailableVersion.Build & ")"
+        Else
+            ' Already updated
+            CmdUpdate.Enabled = False
+            LblAvailableVersion.Caption = "Already updated"
+        End If
+    End If
     
 End Sub
 Public Sub PrepareVersionsStep()
@@ -563,6 +650,7 @@ Public Sub PopulateTVComponents()
     nodX.Checked = False
 
 End Sub
+
 
 Private Sub TreeComponents_Collapse(ByVal Node As MSComctlLib.Node)
     Node.Expanded = True

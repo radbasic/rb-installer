@@ -23,6 +23,11 @@ Private Const ERROR_SUCCESS As Long = 0
 Private Const BINDF_GETNEWESTVERSION As Long = &H10
 Private Const INTERNET_FLAG_RELOAD As Long = &H80000000
 
+' Channel could be:
+'   * nightly
+'   * snapshot
+Private Const CURRENT_CHANNEL As String = "nightly"
+
 Public Function DownloadFile(sSourceUrl As String, _
                              sLocalFile As String) As Boolean
                              
@@ -46,7 +51,7 @@ Public Sub DownloadPkg(downloadFolder As String)
     Dim LocalTempPath As String
     Dim result As Boolean
     
-    PkgUrl = "https://downloads.radbasic.dev/channels/nightly/radbasic-core-nightly.zip"
+    PkgUrl = "https://downloads.radbasic.dev/channels/" & CURRENT_CHANNEL & "/radbasic-core-nightly.zip"
     LocalTempPath = downloadFolder & "\radbasic-core-nightly.zip"
     
     result = DownloadFile(PkgUrl, LocalTempPath)
