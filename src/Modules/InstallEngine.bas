@@ -13,7 +13,7 @@ Private Const REGKEY_NAME_INSTALLER As String = "Installer"
 Private Const REGKEY_VALUE_INSTALLER As String = "RB-Installer"
 
 ' Install the last nightly into the target dir as new installation
-Public Function InstallNightly(targetDir As String) As Boolean
+Public Function InstallNightly(targetDir As String, newInstall As Boolean) As Boolean
     Dim TmpUnpackFolder As String
     Dim zipFile As String
     Dim resultOK As Boolean
@@ -48,15 +48,19 @@ Public Function InstallNightly(targetDir As String) As Boolean
     FrmIniSetup.SetStep "Copying files...", 85
     Call CopyFolderAPI(TmpUnpackFolder & "\", targetDir)
     
-    ' Step 7: Create/update Registry keys
-    FrmIniSetup.SetStep "Modifying Windows Registry...", 90
-    resultOK = resultOK And Registry_WriteString(HKEY_LOCAL_MACHINE, BASE_REGISTRY_PATH, REGKEY_NAME_INSTALL_DIR, targetDir)
-    resultOK = resultOK And Registry_WriteString(HKEY_LOCAL_MACHINE, BASE_REGISTRY_PATH, REGKEY_NAME_INSTALLER, REGKEY_VALUE_INSTALLER)
-    
-    ' Step 8: Start Menu & Desktop links
-    FrmIniSetup.SetStep "Creating shortcuts...", 100
-    IDEExecPath = targetDir & "\bin\rbide.exe"
-    resultOK = resultOK And OsUtils.CreateStartMenuShortcut("RAD Basic IDE", IDEExecPath, "", "", "", True)
+    If (newInstall) Then
+        ' Step 7: Create/update Registry keys
+        FrmIniSetup.SetStep "Modifying Windows Registry...", 90
+        resultOK = resultOK And Registry_WriteString(HKEY_LOCAL_MACHINE, BASE_REGISTRY_PATH, REGKEY_NAME_INSTALL_DIR, targetDir)
+        resultOK = resultOK And Registry_WriteString(HKEY_LOCAL_MACHINE, BASE_REGISTRY_PATH, REGKEY_NAME_INSTALLER, REGKEY_VALUE_INSTALLER)
+        
+        ' Step 8: Start Menu & Desktop links
+        FrmIniSetup.SetStep "Creating shortcuts...", 100
+        IDEExecPath = targetDir & "\bin\rbide.exe"
+        resultOK = resultOK And OsUtils.CreateStartMenuShortcut("RAD Basic IDE", IDEExecPath, "", "", "", True)
+    Else
+        FrmIniSetup.SetStep "Updating packages...", 100
+    End If
     
     InstallNightly = resultOK
 End Function

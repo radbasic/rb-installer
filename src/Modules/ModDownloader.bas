@@ -26,7 +26,7 @@ Private Const INTERNET_FLAG_RELOAD As Long = &H80000000
 ' Channel could be:
 '   * nightly
 '   * snapshot
-Private Const CURRENT_CHANNEL As String = "snapshot"
+Private Const CURRENT_CHANNEL As String = "nightly"
 
 Public Function DownloadFile(sSourceUrl As String, _
                              sLocalFile As String) As Boolean

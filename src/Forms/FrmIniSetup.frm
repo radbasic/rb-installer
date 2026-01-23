@@ -418,11 +418,11 @@ Private Sub CmdNext_Click()
     UpdateButtons CurrenStep
     
     If CurrenStep = Installling Then
-        ' Force the re
+        ' Force the repaint
         DoEvents
         
         ' Execute the install
-        installedOk = InstallNightly(TxtDstFolder.Text)
+        installedOk = InstallNightly(TxtDstFolder.Text, True)
         
         If (installedOk) Then
             MsgBox "Installed successfully", vbOKOnly + vbInformation, "RAD Basic Installer"
@@ -440,6 +440,44 @@ Private Sub CmdNext_Click()
         UpdateButtons CurrenStep
     End If
     
+
+End Sub
+
+Private Sub CmdUpdate_Click()
+    Dim installedOk As Boolean
+    Dim localInstallDir As String
+    
+    CmdUpdate.Enabled = False
+    
+    ' Jump to Installing step
+    CurrenStep = Installling
+    ChangeComponent CurrenStep
+    UpdateButtons CurrenStep
+    
+    ' Force the repaint
+    DoEvents
+    
+    ' Execute the install
+    localInstallDir = GetInstalledDir()
+    LogInfo Me.name, "Performing update to target directory: " & localInstallDir
+    installedOk = InstallNightly(localInstallDir, False)
+    
+    If (installedOk) Then
+        MsgBox "Updated successfully", vbOKOnly + vbInformation, "RAD Basic Installer"
+        ' Refresh the value
+        IsInstalledAlready = ReqValidator.IsNewRADBasicInstalled
+        ' Refresh Versions step
+        PrepareVersionsStep
+        ' Refresh versions
+        CheckVersions
+    Else
+        MsgBox "Some error ocurred during the setup process", vbOKOnly + vbExclamation, "RAD Basic Installer"
+    End If
+    
+    ' Back to Main step
+    CurrenStep = ActionStep
+    ChangeComponent CurrenStep
+    UpdateButtons CurrenStep
 
 End Sub
 
@@ -514,9 +552,9 @@ Private Sub UpdateButtons(CurrentStep As SetupStep)
 
 End Sub
 
+
+
 Private Sub Form_Load()
-    Dim InstalledVersion As AppVersionInfo
-    Dim AvailableVersion As AppVersionInfo
     ReqUninstallOldVer = ReqValidator.IsOldRADBasicInstalled
     IsInstalledAlready = ReqValidator.IsNewRADBasicInstalled
     
@@ -541,24 +579,37 @@ Private Sub Form_Load()
     ' Default value for destination folder
     TxtDstFolder.Text = Environ$("ProgramFiles(x86)") & "\" & "RAD Basic"
     
-    ' Retrieve installed version
-    If IsInstalledAlready Then
-        InstalledVersion = GetInstalledVersion
-        LogInfo Me.name, "Detected installed version: " & InstalledVersion.Version & " (build: " & InstalledVersion.Build & ")"
-        LblInstalledVersion.Caption = LblInstalledVersion.Caption & " " & InstalledVersion.Version & " (build: " & InstalledVersion.Build & ")"
-    End If
-    
-    ' Retrieve online available version
-    If GetOnlineVersionInfo("https://downloads.radbasic.dev/channels/snapshots/currentversion.json", AvailableVersion) Then
-        LblAvailableVersion.Caption = "New version available: " & AvailableVersion.Version & " (build: " & AvailableVersion.Build & ")"
-    End If
-    
-    ' If newer version is available => Enable Update installation button
-    CmdUpdate.Enabled = AvailableVersion.Build > InstalledVersion.Build
+    CheckVersions
     
     ' Set startup frame/step
     Set currentFrame = FrameFirst
     UpdateButtons CurrenStep
+    
+End Sub
+Public Sub CheckVersions()
+    Dim InstalledVersion As AppVersionInfo
+    Dim AvailableVersion As AppVersionInfo
+    
+    ' Retrieve installed version
+    If IsInstalledAlready Then
+        InstalledVersion = GetInstalledVersion
+        LogInfo Me.name, "Detected installed version: " & InstalledVersion.Version & " (build: " & InstalledVersion.Build & ")"
+        LblInstalledVersion.Caption = "Installed: " & " " & InstalledVersion.Version & " (build: " & InstalledVersion.Build & ")"
+    End If
+    
+    ' Retrieve online available version
+    If GetOnlineVersionInfo("https://downloads.radbasic.dev/channels/nightly/currentversion.json", AvailableVersion) Then
+        
+        If AvailableVersion.Build > InstalledVersion.Build Then
+            ' New version available
+            CmdUpdate.Enabled = True
+            LblAvailableVersion.Caption = "New version available: " & AvailableVersion.Version & " (build: " & AvailableVersion.Build & ")"
+        Else
+            ' Already updated
+            CmdUpdate.Enabled = False
+            LblAvailableVersion.Caption = "Already updated"
+        End If
+    End If
     
 End Sub
 Public Sub PrepareVersionsStep()
