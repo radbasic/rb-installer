@@ -218,14 +218,6 @@ Begin VB.Form FrmIniSetup
          Top             =   360
          Width           =   7572
       End
-      Begin VB.Label Label2 
-         Caption         =   $"FrmIniSetup.frx":030A
-         Height          =   492
-         Left            =   240
-         TabIndex        =   18
-         Top             =   360
-         Width           =   6372
-      End
    End
    Begin VB.Frame FrameSelectComponents 
       BorderStyle     =   0  'None
