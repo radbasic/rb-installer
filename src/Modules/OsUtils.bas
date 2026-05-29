@@ -19,17 +19,17 @@ Private Type SHFILEOPSTRUCT
 End Type
 
 ' --- WinAPI Private CONSTS --- '
-Private Const FO_COPY = &H2
-Private Const FOF_NOCONFIRMATION = &H10
-Private Const FOF_NOCONFIRMMKDIR = &H200
-Private Const FOF_SILENT = &H4
+Private Const FO_COPY As Integer = &H2
+Private Const FOF_NOCONFIRMATION As Integer = &H10
+Private Const FOF_NOCONFIRMMKDIR As Integer = &H200
+Private Const FOF_SILENT As Integer = &H4
 
-Private Const REG_OPTION_NON_VOLATILE = 0
-Private Const KEY_SET_VALUE = &H2
-Private Const KEY_CREATE_SUB_KEY = &H4
-Private Const REG_SZ = 1
+Private Const REG_OPTION_NON_VOLATILE As Integer = 0
+Private Const KEY_SET_VALUE As Integer = &H2
+Private Const KEY_CREATE_SUB_KEY As Integer = &H4
+Private Const REG_SZ As Integer = 1
 
-Private Const ERROR_SUCCESS = 0
+Private Const ERROR_SUCCESS As Integer = 0
 
 ' --- WinAPI Public CONSTS --- '
 Public Const HKEY_CLASSES_ROOT     As Long = &H80000000
