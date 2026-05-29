@@ -15,7 +15,7 @@ Public Sub UnzipWithPowerShell(ByVal zipPath As String, ByVal destFolder As Stri
     psCommand = "powershell -NoProfile -ExecutionPolicy Bypass -Command " & _
                  Chr$(34) & "Expand-Archive -Path '" & zipPath & "' -DestinationPath '" & destFolder & "' -Force" & Chr$(34)
     
-    Debug.Print psCommand
+    'Debug.Print psCommand
     
     Set shellObj = CreateObject("WScript.Shell")
     ret = shellObj.Run(psCommand, 0, True) ' flags => 0=hidden, True=wait/sync
