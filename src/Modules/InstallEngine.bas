@@ -1,39 +1,44 @@
 Attribute VB_Name = "InstallEngine"
 ' RAD Basic Installer
-' Copyright (c) 2019-2025 by RAD Basic Team. All rights reserved.
+' Copyright (c) 2019-2026 by RAD Basic Team. All rights reserved.
 ' Licensed under the MIT License. See License.txt in the project root for license information.
 
 Option Explicit
 
-Private Const BASE_WORK_FOLDER As String = "C:\Users\koss\AppData\Local\Temp\radbasic-installer"
-Private Const BASE_UNPACK_FOLDER As String = BASE_WORK_FOLDER & "\extract-pkg"
+Private Const RELATIVE_WORK_FOLDER As String = "\Temp\radbasic-installer"
+Private Const RELATIVE_UNPACK_FOLDER As String = "\extract-pkg"
+
 Private Const BASE_REGISTRY_PATH As String = "SOFTWARE\WOW6432Node\RAD Basic"
 Private Const REGKEY_NAME_INSTALL_DIR As String = "InstallDir"
 Private Const REGKEY_NAME_INSTALLER As String = "Installer"
 Private Const REGKEY_VALUE_INSTALLER As String = "RB-Installer"
 
-' Install the last nightly into the target dir as new installation
-Public Function InstallNightly(targetDir As String, newInstall As Boolean) As Boolean
+' Install the last version into the target dir as new installation
+Public Function InstallVersion(targetDir As String, newInstall As Boolean) As Boolean
     Dim TmpUnpackFolder As String
     Dim zipFile As String
     Dim resultOK As Boolean
     Dim IDEExecPath As String
+    Dim baseWorkFolder As String, baseUnpackFolder As String
+    
+    baseWorkFolder = Environ$("LOCALAPPDATA") & RELATIVE_WORK_FOLDER
+    baseUnpackFolder = baseWorkFolder & RELATIVE_UNPACK_FOLDER
     
     resultOK = True
     
     ' Step 1: Check if parent tmp folder exists for download packages exists
     FrmIniSetup.SetStep "Creating tmp directories...", 10
-    If Dir(BASE_UNPACK_FOLDER, vbDirectory) = "" Then
-        OsUtils.CreateFolderTree BASE_UNPACK_FOLDER
+    If Dir(baseUnpackFolder, vbDirectory) = "" Then
+        OsUtils.CreateFolderTree baseUnpackFolder
     End If
     
     ' Step 2: Create a tmp dir to unpack packages into it
-    TmpUnpackFolder = OsUtils.CreateTempFolder(BASE_UNPACK_FOLDER)
+    TmpUnpackFolder = OsUtils.CreateTempFolder(baseUnpackFolder)
     
     ' Step 3: Download nightly
     FrmIniSetup.SetStep "Downloading packages...", 25
-    ModDownloader.DownloadPkg BASE_WORK_FOLDER
-    zipFile = BASE_WORK_FOLDER & "\radbasic-core-nightly.zip"
+    ModDownloader.DownloadPkg baseWorkFolder
+    zipFile = baseWorkFolder & "\radbasic-core.zip"
     
     ' Step 4: Unpack downloaded packages
     FrmIniSetup.SetStep "Unpacking files...", 65
@@ -62,5 +67,5 @@ Public Function InstallNightly(targetDir As String, newInstall As Boolean) As Bo
         FrmIniSetup.SetStep "Updating packages...", 100
     End If
     
-    InstallNightly = resultOK
+    InstallVersion = resultOK
 End Function

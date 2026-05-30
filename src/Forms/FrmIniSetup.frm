@@ -60,7 +60,7 @@ Begin VB.Form FrmIniSetup
             Caption         =   "Installed:"
             Height          =   255
             Left            =   120
-            TabIndex        =   34
+            TabIndex        =   18
             Top             =   600
             Width           =   3975
          End
@@ -73,7 +73,7 @@ Begin VB.Form FrmIniSetup
             Width           =   3975
          End
          Begin VB.Label Label7 
-            Caption         =   "RAD Basic nightly"
+            Caption         =   "RAD Basic Beta"
             BeginProperty Font 
                Name            =   "MS Sans Serif"
                Size            =   9.75
@@ -261,7 +261,7 @@ Begin VB.Form FrmIniSetup
          Enabled         =   -1  'True
          ScrollBars      =   2
          FileName        =   "C:\Users\koss\radbasic-src\rb-installer\EULA.rtf"
-         TextRTF         =   $"FrmIniSetup.frx":0361
+         TextRTF         =   $"FrmIniSetup.frx":030A
       End
       Begin VB.CheckBox CKAcceptEula 
          Caption         =   "I accept the terms of license agreement"
@@ -295,8 +295,8 @@ Begin VB.Form FrmIniSetup
       TabIndex        =   8
       Top             =   720
       Width           =   8052
-      Begin VB.Label LblNightlyNotice 
-         Caption         =   "The installation process currently only support nightly releases."
+      Begin VB.Label LblVersionNotice 
+         Caption         =   "The installation process currently only support beta releases."
          Height          =   252
          Left            =   240
          TabIndex        =   9
@@ -336,7 +336,7 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 ' RAD Basic Installer
-' Copyright (c) 2019-2025 by RAD Basic Team. All rights reserved.
+' Copyright (c) 2019-2026 by RAD Basic Team. All rights reserved.
 ' Licensed under the MIT License. See License.txt in the project root for license information.
 Option Explicit
 Private ReqUninstallOldVer As Boolean
@@ -414,7 +414,7 @@ Private Sub CmdNext_Click()
         DoEvents
         
         ' Execute the install
-        installedOk = InstallNightly(TxtDstFolder.Text, True)
+        installedOk = InstallVersion(TxtDstFolder.Text, True)
         
         If (installedOk) Then
             MsgBox "Installed successfully", vbOKOnly + vbInformation, "RAD Basic Installer"
@@ -585,8 +585,8 @@ Public Sub CheckVersions()
     ' Retrieve installed version
     If IsInstalledAlready Then
         InstalledVersion = GetInstalledVersion
-        LogInfo Me.name, "Detected installed version: " & InstalledVersion.Version & " (build: " & InstalledVersion.Build & ")"
-        LblInstalledVersion.Caption = "Installed: " & " " & InstalledVersion.Version & " (build: " & InstalledVersion.Build & ")"
+        LogInfo Me.name, "Detected installed version: " & InstalledVersion.version & " (build: " & InstalledVersion.Build & ")"
+        LblInstalledVersion.Caption = "Installed: " & " " & InstalledVersion.version & " (build: " & InstalledVersion.Build & ")"
     End If
     
     ' Retrieve online available version
@@ -595,7 +595,7 @@ Public Sub CheckVersions()
         If AvailableVersion.Build > InstalledVersion.Build Then
             ' New version available
             CmdUpdate.Enabled = True
-            LblAvailableVersion.Caption = "New version available: " & AvailableVersion.Version & " (build: " & AvailableVersion.Build & ")"
+            LblAvailableVersion.Caption = "New version available: " & AvailableVersion.version & " (build: " & AvailableVersion.Build & ")"
         Else
             ' Already updated
             CmdUpdate.Enabled = False
