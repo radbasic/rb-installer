@@ -1,0 +1,24 @@
+#!/bin/sh
+# Impide commits directos en master/main. Solo se permiten merges de develop o hotfix/*.
+# Activar con: git config core.hooksPath .githooks
+# Saltar en una emergencia: git commit --no-verify
+
+branch=$(git symbolic-ref --short -q HEAD)
+case "$branch" in
+  master|main) ;;
+  *) exit 0 ;;
+esac
+
+# Merge en curso (p.ej. al concluir un merge tras resolver conflictos)
+if merge_head=$(git rev-parse -q --verify MERGE_HEAD); then
+  src=$(git for-each-ref --points-at="$merge_head" --format='%(refname:short)' \
+        refs/heads/develop refs/heads/hotfix refs/remotes/origin/develop refs/remotes/origin/hotfix)
+  if [ -n "$src" ]; then
+    exit 0
+  fi
+  echo "ERROR: en '$branch' solo se permiten merges de develop o hotfix/*." >&2
+  exit 1
+fi
+
+echo "ERROR: no se permiten commits directos en '$branch'. Trabaja en develop o hotfix/* y haz merge." >&2
+exit 1
